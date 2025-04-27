@@ -1,0 +1,61 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Load the Iris dataset
+df = pd.read_csv("https://raw.githubusercontent.com/shrikant-temburwar/Iris-Dataset/master/Iris.csv")
+
+# Basic Data Exploration
+print(df.head())  # Show the first few rows
+print(df.describe())  # Summary statistics of the dataset
+print(df.shape)  # Shape of the dataset
+print(df["Species"].unique())  # Unique species in the dataset
+print(df.groupby("Species").size())  # Count of rows per species
+print(df.info())  # Data types and non-null counts
+
+# Select only numeric columns for correlation calculation
+numeric_df = df.select_dtypes(include=['number'])
+
+# Compute correlation
+corr = numeric_df.corr()
+
+# Plot the heatmap for correlation
+plt.figure(figsize=(10, 6))
+sns.heatmap(corr, annot=True)
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Define a function to plot boxplots for each feature
+def plot_boxplot(y):
+    sns.boxplot(x="Species", y=y, data=df)
+    plt.title(f"Boxplot of {y} by Species")
+    plt.show()
+
+# Create subplots for all features (Sepal and Petal measurements)
+features = ['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']
+plt.figure(figsize=(12, 10))
+
+for i, feature in enumerate(features, 1):
+    plt.subplot(2, 2, i)  # 2x2 grid for plotting
+    plot_boxplot(feature)
+
+# Show the plots
+plt.tight_layout()
+plt.show()
+
+# Individual boxplots for each feature
+sns.boxplot(x='SepalWidthCm', data=df)
+plt.title("Boxplot of SepalWidthCm")
+plt.show()
+
+sns.boxplot(x='SepalLengthCm', data=df)
+plt.title("Boxplot of SepalLengthCm")
+plt.show()
+
+sns.boxplot(x='PetalWidthCm', data=df)
+plt.title("Boxplot of PetalWidthCm")
+plt.show()
+
+sns.boxplot(x='PetalLengthCm', data=df)
+plt.title("Boxplot of PetalLengthCm")
+plt.show()

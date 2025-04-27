@@ -1,0 +1,63 @@
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the Titanic dataset
+titanic = sns.load_dataset("titanic")
+
+# Clean the dataset by dropping unnecessary columns
+titanic_cleaned = titanic.drop(['pclass', 'embarked', 'deck', 'embark_town'], axis=1)
+
+# Display the first few rows of the cleaned dataset
+print("Titanic Dataset (Cleaned):")
+print(titanic_cleaned.head(15))
+print("\n")
+
+# Show the info of the dataset
+print("Titanic Dataset Info:")
+print(titanic_cleaned.info())
+print("\n")
+
+# Display the correlation matrix
+print("Correlation Matrix (Pearson):")
+print(titanic_cleaned.corr(method='pearson', numeric_only=True))
+print("\n")
+
+# Create individual plots for each histogram
+plt.figure(figsize=(10, 6))
+
+# Histogram with 8 bins
+plt.subplot(3, 2, 1)
+sns.histplot(data=titanic, x="fare", bins=8)
+plt.title("Fare Distribution with 8 Bins")
+
+# Histogram with binwidth of 10
+plt.subplot(3, 2, 2)
+sns.histplot(data=titanic, x="fare", binwidth=10)
+plt.title("Fare Distribution with Binwidth of 10")
+
+# Histogram with 20 bins and binwidth of 10
+plt.subplot(3, 2, 3)
+sns.histplot(data=titanic, x="fare", bins=20, binwidth=10)
+plt.title("Fare Distribution with 20 Bins and Binwidth of 10")
+
+# Histogram with binwidth of 20
+plt.subplot(3, 2, 4)
+sns.histplot(data=titanic, x="fare", binwidth=20)
+plt.title("Fare Distribution with Binwidth of 20")
+
+# Histogram with binwidth of 1
+plt.subplot(3, 2, 5)
+sns.histplot(data=titanic, x="fare", binwidth=1)
+plt.title("Fare Distribution with Binwidth of 1")
+
+# Histogram with 20 bins and binwidth of 50
+plt.subplot(3, 2, 6)
+sns.histplot(data=titanic, x="fare", bins=20, binwidth=50)
+plt.title("Fare Distribution with 20 Bins and Binwidth of 50")
+
+# Adjust layout to avoid overlap
+plt.tight_layout()
+
+# Show the plots
+plt.show()

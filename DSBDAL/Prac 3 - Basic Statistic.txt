@@ -1,0 +1,64 @@
+# Install seaborn if not installed (only once)
+!pip install seaborn
+
+# Import libraries
+import pandas as pd
+import seaborn as sns
+import numpy as np
+
+# ------------------- Part 1: Titanic Dataset Analysis -------------------
+
+# Load Titanic dataset
+df = sns.load_dataset('titanic')
+
+# Display Titanic dataset
+print("\n--- Titanic Dataset ---")
+print(df)
+
+# Select relevant columns: sex and age
+data = df[["sex", "age"]]
+
+# Check for missing values
+print("\n--- Missing values before imputation ---")
+print(data.isnull().sum())
+
+# Impute missing age values with the mean, using .loc to avoid the warning
+data.loc[:, "age"] = data["age"].fillna(data["age"].mean())
+
+# Check for missing values after imputation
+print("\n--- Missing values after imputation ---")
+print(data.isnull().sum())
+
+# Group data by sex
+grouped_data = data.groupby("sex")
+
+# Select the 'age' column from grouped data and apply aggregation functions
+age_data = grouped_data['age']
+summary = age_data.agg(['mean', 'median', 'min', 'max', 'std'])
+
+# Show the summary result
+print("\n--- Summary of age data by sex ---")
+print(summary)
+
+# Create list of ages grouped by sex
+age_list = data.groupby('sex')['age'].apply(list)
+
+# Print the list of ages for each sex
+print("\n--- List of Ages for each Sex ---")
+print(age_list)
+
+
+# ------------------- Part 2: Iris Dataset Analysis -------------------
+
+# Load the iris dataset
+df_iris = sns.load_dataset('iris')
+
+# Group by species and describe
+data_iris = df_iris.groupby('species')
+
+# Display settings to show all columns
+pd.set_option('display.max_columns', None)
+
+# Show descriptive statistics of the grouped data
+print("\n--- Descriptive Statistics for the Iris Dataset Grouped by Species ---")
+print(data_iris.describe())

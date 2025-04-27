@@ -1,0 +1,97 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.preprocessing import LabelEncoder
+
+# Load dataset
+data = pd.read_csv("https://raw.githubusercontent.com/venky14/Machine-Learning-with-Iris-Dataset/master/Iris.csv")
+
+# Display first and last few rows of the dataset
+print("First 5 rows of the dataset:")
+print(data.head(5))
+
+print("\nLast 5 rows of the dataset:")
+print(data.tail())
+
+# Dataset summary
+print("\nDataset Description:")
+print(data.describe(include='all'))
+
+print("\nDataset Info:")
+print(data.info())
+
+# Shape of the dataset
+print("\nShape of the dataset:", data.shape)
+
+# Check for unique species
+print("\nUnique species in the dataset:")
+print(data['Species'].unique())
+
+# Check for missing values
+print("\nMissing values in the dataset:")
+print(data.isnull().sum())
+
+# Split features and target variable
+X = data.iloc[:, 1:5]
+y = data.iloc[:, 5:]
+
+# Label encoding for target variable
+encode = LabelEncoder()
+y = encode.fit_transform(y)
+
+# Flatten y to 1D array explicitly
+y = y.ravel()
+
+# Split the dataset into training and test sets (70% train, 30% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+# Create and train the Naive Bayes model
+naive_bayes = GaussianNB()
+naive_bayes.fit(X_train, y_train)
+
+# Make predictions
+pred = naive_bayes.predict(X_test)
+
+# Confusion matrix
+matrix = confusion_matrix(y_test, pred, labels=naive_bayes.classes_)
+print("\nConfusion Matrix:")
+print(matrix)
+
+# Extract true positives (tp), false negatives (fn), false positives (fp), and true negatives (tn)
+tp, fn, fp, tn = confusion_matrix(y_test, pred, labels=[1, 0]).reshape(-1)
+
+# Plot confusion matrix
+conf_matrix = ConfusionMatrixDisplay(confusion_matrix=matrix, display_labels=naive_bayes.classes_)
+conf_matrix.plot(cmap=plt.cm.YlGn)
+plt.show()
+
+# Print classification report
+print("\nClassification Report:")
+print(classification_report(y_test, pred))
+
+# Accuracy score
+print('\nAccuracy: {:.2f}'.format(accuracy_score(y_test, pred)))
+
+# Calculate error rate
+error_rate = (fp + fn) / (tp + tn + fn + fp)
+print('Error Rate: {:.2f}'.format(error_rate))
+
+# Sensitivity (Recall or True Positive Rate)
+sensitivity = tp / (tp + fn)
+print('Sensitivity (Recall or True Positive Rate): {:.2f}'.format(sensitivity))
+
+# Specificity (True Negative Rate)
+specificity = tn / (fp + tn)
+print('Specificity (True Negative Rate): {:.2f}'.format(specificity))
+
+# Precision (Positive Predictive Value)
+precision = tp / (tp + fp)
+print('Precision (Positive Predictive Value): {:.2f}'.format(precision))
+
+# False Positive Rate
+false_positive_rate = fp / (tn + fp)
+print('False Positive Rate: {:.2f}'.format(false_positive_rate))
