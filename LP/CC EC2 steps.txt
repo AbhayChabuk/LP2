@@ -1,0 +1,58 @@
+✅ Steps to Create an Amazon EC2 Instance:
+1. Sign in to AWS Console
+Go to: https://console.aws.amazon.com/
+
+Login with your AWS credentials.
+
+2. Open EC2 Dashboard
+In the AWS Console search bar, type EC2 and select EC2 service.
+
+This opens the EC2 Dashboard.
+
+3. Launch a New Instance
+Click on "Launch Instance" button.
+
+4. Configure Instance Settings
+a. Name and Tags
+Set a name for your instance (e.g., MyFirstEC2Instance).
+
+b. Application and OS Images (AMI)
+Choose an Amazon Machine Image (AMI), e.g.:
+
+Amazon Linux 2
+
+Ubuntu Server 22.04 LTS
+
+Or other OS as required.
+
+c. Instance Type
+Choose a type based on your use case:
+
+For free-tier: Select t2.micro
+
+d. Key Pair (Login)
+Select an existing key pair or create a new one.
+
+Important: Download and save the .pem file if creating new.
+
+This is needed for SSH access.
+
+e. Network Settings
+You can use default settings or:
+
+Allow SSH (port 22) from your IP
+
+Allow HTTP (port 80) and HTTPS (port 443) if it's a web server
+
+f. Configure Storage
+Default (8 GB) is usually enough for small tasks.
+
+Increase if your project requires more space.
+
+5. Launch Instance
+Click on "Launch Instance".
+
+6. View Instance
+Go to the Instances tab on the EC2 Dashboard.
+
+Wait for the status to show Running and Status Checks: 2/2 passed.

@@ -1,0 +1,48 @@
+public class BasicCalculator {
+
+    // Addition
+    public static Integer add(Integer a, Integer b) {
+        return a + b;
+    }
+
+    // Subtraction
+    public static Integer subtract(Integer a, Integer b) {
+        return a - b;
+    }
+
+    // Multiplication
+    public static Integer multiply(Integer a, Integer b) {
+        return a * b;
+    }
+
+    // Division with check for divide-by-zero
+    public static Decimal divide(Decimal a, Decimal b) {
+        if (b != 0) {
+            return a / b;
+        } else {
+            System.debug('Error: Division by zero!');
+            return null;
+        }
+    }
+
+    // Run and show all calculations
+    public static void runCalculations() {
+        Integer num1 = 20;
+        Integer num2 = 5;
+
+        System.debug('Addition: ' + add(num1, num2));
+        System.debug('Subtraction: ' + subtract(num1, num2));
+        System.debug('Multiplication: ' + multiply(num1, num2));
+        System.debug('Division: ' + divide(num1, num2));
+    }
+}
+
+
+
+
+
+
+
+
+How to run:
+BasicCalculator.runCalculations();

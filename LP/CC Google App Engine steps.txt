@@ -1,0 +1,56 @@
+Google App Engine (GAE) Setup on Windows – Local Hello World App
+
+1. Download and Install Google Cloud SDK
+   1. Go to: https://cloud.google.com/sdk/docs/install
+   2. Download the Windows installer (.zip file).
+   3. Extract the .zip to a folder (e.g., C:\GoogleCloudSDK).
+   4. Run install.bat inside the extracted folder.
+   5. During installation:
+      - Choose to Add Cloud SDK to PATH ✅
+      - Choose to Run `gcloud init` ✅
+
+2. Install App Engine Components
+   1. Open Command Prompt (CMD).
+   2. Run the following command to install Python App Engine component:
+      gcloud components install app-engine-python
+   3. (Optional for Python 3):
+      gcloud components install app-engine-python-extras
+
+3. Create Project Folder and App Files
+   1. Open CMD and run:
+      mkdir hello-world
+      cd hello-world
+   2. Create a file named main.py and add the following code:
+      from flask import Flask
+
+      app = Flask(__name__)
+
+      @app.route('/')
+      def hello():
+          return 'Hello, World!'
+
+      if __name__ == '__main__':
+          app.run()
+
+   3. Create a file named app.yaml in the same folder with the following content:
+      runtime: python39
+      entrypoint: gunicorn -b :$PORT main:app
+
+4. Install Required Python Libraries
+   1. In CMD, run:
+      pip install flask gunicorn
+
+5. Run App Locally
+   1. Option 1: Using Flask (simple)
+      python main.py
+   2. Option 2: Using GAE local server (if available)
+      dev_appserver.py app.yaml
+
+6. Open in Browser
+   1. Go to:
+      http://localhost:5000 (If using Flask)
+      OR
+      http://localhost:8080 (If using GAE dev_appserver.py)
+
+✅ Output:
+Hello, World!
